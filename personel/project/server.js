@@ -4,6 +4,7 @@ import expressauth from "express-openid-connect";
 import {queryNormalized} from "./api/db/connection-pool.js";
 import bodyParser from "body-parser";
 
+
 const { auth, requiresAuth } = expressauth;
 
 const app = express();
@@ -106,7 +107,7 @@ app.post("/api/unlike", async (req, res) => {
         [req.user.id, req.body.beepId]
     );
     const dbRes2 = await queryNormalized(
-        ` 
+        `
         UPDATE beep SET like_count = like_count - 1 WHERE beep.id = $1 RETURNING *;
         `
         , [req.body.beepId]
